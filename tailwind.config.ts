@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -46,6 +47,14 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        status: {
+          pending: "hsl(var(--status-pending))",
+          "pending-fg": "hsl(var(--status-pending-foreground))",
+          "in-progress": "hsl(var(--status-in-progress))",
+          "in-progress-fg": "hsl(var(--status-in-progress-foreground))",
+          resolved: "hsl(var(--status-resolved))",
+          "resolved-fg": "hsl(var(--status-resolved-foreground))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
