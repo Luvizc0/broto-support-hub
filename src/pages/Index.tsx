@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Shield, FileText, CheckCircle, Users } from "lucide-react";
+import { Shield, FileText, CheckCircle, Users, Sparkles, Zap } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -21,81 +21,140 @@ const Index = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
-        <p className="text-muted-foreground">Loading...</p>
+        <div className="neon-text">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <Shield className="w-5 h-5 text-primary-foreground" />
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse-glow" />
+      </div>
+
+      <header className="border-b border-primary/20 glass-card relative z-10">
+        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center pulse-glow">
+              <Shield className="w-6 h-6 text-background" />
             </div>
             <div>
-              <h1 className="text-xl font-bold">Brototype</h1>
+              <h1 className="text-xl font-bold neon-text">Brototype</h1>
               <p className="text-xs text-muted-foreground">BCMP</p>
             </div>
           </div>
-          <Button onClick={() => navigate("/auth")}>
+          <Button onClick={() => navigate("/auth")} className="gradient-primary hover-lift">
+            <Sparkles className="w-4 h-4 mr-2" />
             Get Started
           </Button>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-16 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-12">
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold">
+          <div className="space-y-6">
+            <div className="flex justify-center mb-6">
+              <Zap className="w-20 h-20 text-primary animate-pulse-glow" />
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold neon-text animate-fade-in">
               Brototype Complaint Management Portal
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A transparent and efficient platform for students to raise issues and track their resolutions
+              A transparent and efficient platform for students to raise issues and track their resolutions with cutting-edge technology
             </p>
             <div className="pt-4">
-              <Button size="lg" onClick={() => navigate("/auth")}>
+              <Button 
+                size="lg" 
+                onClick={() => navigate("/auth")}
+                className="gradient-primary hover-lift text-lg px-8 py-6"
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
                 Sign In or Create Account
               </Button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-            <div className="p-6 border rounded-lg bg-card space-y-3">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                <FileText className="w-6 h-6 text-primary" />
+            <div className="glass-card hover-lift p-6 space-y-3">
+              <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto pulse-glow">
+                <FileText className="w-6 h-6 text-background" />
               </div>
-              <h3 className="font-semibold text-lg">Easy Submission</h3>
+              <h3 className="font-semibold text-lg text-primary">Easy Submission</h3>
               <p className="text-sm text-muted-foreground">
-                Submit complaints with detailed descriptions and categorization
+                Submit complaints with detailed descriptions, file attachments, and categorization for faster resolution
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg bg-card space-y-3">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                <CheckCircle className="w-6 h-6 text-primary" />
+            <div className="glass-card hover-lift p-6 space-y-3">
+              <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto pulse-glow">
+                <CheckCircle className="w-6 h-6 text-background" />
               </div>
-              <h3 className="font-semibold text-lg">Track Progress</h3>
+              <h3 className="font-semibold text-lg text-primary">Track Progress</h3>
               <p className="text-sm text-muted-foreground">
-                Monitor your complaint status from pending to resolved
+                Monitor your complaint status in real-time from pending to resolved with transparent updates
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg bg-card space-y-3">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                <Users className="w-6 h-6 text-primary" />
+            <div className="glass-card hover-lift p-6 space-y-3">
+              <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto pulse-glow">
+                <Users className="w-6 h-6 text-background" />
               </div>
-              <h3 className="font-semibold text-lg">Admin Management</h3>
+              <h3 className="font-semibold text-lg text-primary">Admin Management</h3>
               <p className="text-sm text-muted-foreground">
-                Efficient complaint resolution with admin dashboard and tools
+                Efficient complaint resolution with advanced admin dashboard and powerful management tools
               </p>
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="glass-card p-8 mt-16 space-y-6 text-left">
+            <h2 className="text-3xl font-bold neon-text text-center mb-8">Key Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 gradient-primary rounded flex items-center justify-center flex-shrink-0 mt-1">
+                  <CheckCircle className="w-4 h-4 text-background" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">File Attachments</h4>
+                  <p className="text-sm text-muted-foreground">Upload images and PDFs as proof for your complaints</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 gradient-primary rounded flex items-center justify-center flex-shrink-0 mt-1">
+                  <CheckCircle className="w-4 h-4 text-background" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">Callback Requests</h4>
+                  <p className="text-sm text-muted-foreground">Request a direct callback for urgent issues</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 gradient-primary rounded flex items-center justify-center flex-shrink-0 mt-1">
+                  <CheckCircle className="w-4 h-4 text-background" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">Real-time Updates</h4>
+                  <p className="text-sm text-muted-foreground">Get instant notifications on status changes</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 gradient-primary rounded flex items-center justify-center flex-shrink-0 mt-1">
+                  <CheckCircle className="w-4 h-4 text-background" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">Advanced Filtering</h4>
+                  <p className="text-sm text-muted-foreground">Search and filter complaints by category and status</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="border-t mt-16">
+      <footer className="border-t border-primary/20 mt-16 glass-card relative z-10">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
           © 2024 Brototype. All rights reserved.
         </div>

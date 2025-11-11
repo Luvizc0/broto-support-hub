@@ -4,7 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, LogOut, FileText, Clock, CheckCircle } from "lucide-react";
+import { Plus, LogOut, FileText, Clock, CheckCircle, Sparkles } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { toast } from "sonner";
 
@@ -54,7 +54,6 @@ const StudentDashboard = () => {
 
       setComplaints(data || []);
       
-      // Calculate stats
       const stats = {
         total: data?.length || 0,
         pending: data?.filter(c => c.status === "pending").length || 0,
@@ -72,79 +71,92 @@ const StudentDashboard = () => {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+        <div className="neon-text">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Student Dashboard</h1>
-          <Button variant="outline" onClick={signOut}>
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse-glow" />
+      </div>
+
+      <header className="border-b border-primary/20 glass-card relative z-10">
+        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-8 h-8 text-primary animate-pulse-glow" />
+            <h1 className="text-3xl font-bold neon-text">Student Dashboard</h1>
+          </div>
+          <Button variant="outline" onClick={signOut} className="neon-border hover:bg-destructive/20">
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out
           </Button>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 space-y-8">
+      <main className="container mx-auto px-4 py-8 space-y-8 relative z-10">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
+          <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium text-foreground">
                 Total Complaints
               </CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
+              <FileText className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.total}</div>
+              <div className="text-2xl font-bold neon-text">{stats.total}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium text-foreground">
                 Pending
               </CardTitle>
               <Clock className="h-4 w-4 text-status-pending" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.pending}</div>
+              <div className="text-2xl font-bold text-status-pending">{stats.pending}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium text-foreground">
                 In Progress
               </CardTitle>
               <Clock className="h-4 w-4 text-status-in-progress" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.inProgress}</div>
+              <div className="text-2xl font-bold text-status-in-progress">{stats.inProgress}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium text-foreground">
                 Resolved
               </CardTitle>
               <CheckCircle className="h-4 w-4 text-status-resolved" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.resolved}</div>
+              <div className="text-2xl font-bold text-status-resolved">{stats.resolved}</div>
             </CardContent>
           </Card>
         </div>
 
         {/* Create Complaint Button */}
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">My Complaints</h2>
-          <Button onClick={() => navigate("/student/new-complaint")}>
+          <h2 className="text-2xl font-semibold neon-text">My Complaints</h2>
+          <Button 
+            onClick={() => navigate("/student/new-complaint")}
+            className="gradient-primary hover-lift"
+          >
             <Plus className="w-4 h-4 mr-2" />
             New Complaint
           </Button>
@@ -153,10 +165,10 @@ const StudentDashboard = () => {
         {/* Complaints List */}
         <div className="space-y-4">
           {complaints.length === 0 ? (
-            <Card>
+            <Card className="glass-card">
               <CardContent className="py-12">
                 <div className="text-center text-muted-foreground">
-                  <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <FileText className="w-12 h-12 mx-auto mb-4 opacity-50 text-primary" />
                   <p>No complaints yet. Create your first complaint to get started.</p>
                 </div>
               </CardContent>
@@ -165,13 +177,13 @@ const StudentDashboard = () => {
             complaints.map((complaint) => (
               <Card
                 key={complaint.id}
-                className="cursor-pointer hover:shadow-md transition-shadow"
+                className="glass-card hover-lift cursor-pointer"
                 onClick={() => navigate(`/student/complaint/${complaint.id}`)}
               >
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div className="space-y-1">
-                      <CardTitle>{complaint.title}</CardTitle>
+                      <CardTitle className="text-primary">{complaint.title}</CardTitle>
                       <CardDescription>
                         Category: {complaint.category.replace("_", " ")}
                       </CardDescription>

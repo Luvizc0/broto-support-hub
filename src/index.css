@@ -3,112 +3,122 @@
 @tailwind utilities;
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+All colors MUST be HSL. */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-
-    /* Brototype Red Theme */
-    --primary: 0 75% 50%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 0 75% 45%;
-
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 75% 50%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 75% 50%;
-
-    --radius: 0.5rem;
-
-    /* Status Colors */
-    --status-pending: 45 93% 47%;
-    --status-pending-foreground: 0 0% 10%;
-    --status-in-progress: 217 91% 60%;
-    --status-in-progress-foreground: 0 0% 100%;
-    --status-resolved: 142 76% 36%;
-    --status-resolved-foreground: 0 0% 100%;
-
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 7%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 7%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Neon cyan primary */
+    --primary: 180 100% 50%;
+    --primary-foreground: 240 10% 3.9%;
+    --primary-hover: 180 100% 60%;
+    --primary-glow: 180 100% 70%;
+    
+    /* Neon purple secondary */
+    --secondary: 280 100% 60%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 320 100% 50%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 240 10% 15%;
+    --input: 240 10% 15%;
+    --ring: 180 100% 50%;
+    
+    /* Neon status colors */
+    --status-pending: 45 100% 50%;
+    --status-pending-foreground: 240 10% 3.9%;
+    --status-in-progress: 280 100% 60%;
+    --status-in-progress-foreground: 0 0% 98%;
+    --status-resolved: 150 100% 40%;
+    --status-resolved-foreground: 0 0% 98%;
+    
     /* Sidebar */
-    --sidebar-background: 0 0% 10%;
+    --sidebar-background: 240 10% 5%;
     --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 0 75% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 15%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 240 10% 3.9%;
+    --sidebar-accent: 240 10% 10%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 0 75% 50%;
+    --sidebar-border: 240 10% 15%;
+    --sidebar-ring: 180 100% 50%;
 
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius: 0.75rem;
   }
 
-  .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 95%;
-
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 95%;
-
-    --primary: 0 75% 55%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 0 75% 50%;
-
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 95%;
-
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 75% 55%;
-
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 75% 55%;
-
-    --sidebar-background: 0 0% 8%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 0 75% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 75% 55%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
-
+  
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .neon-border {
+    @apply border border-primary/30 shadow-[0_0_15px_rgba(0,255,255,0.3)];
+  }
+  
+  .neon-glow {
+    @apply shadow-[0_0_20px_rgba(0,255,255,0.5)];
+  }
+  
+  .neon-text {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--primary) / 0.5);
+  }
+  
+  .glass-card {
+    @apply bg-card/50 backdrop-blur-xl border border-primary/20;
+  }
+  
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(0,255,255,0.4)];
+  }
+  
+  .animated-gradient {
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)), hsl(var(--primary)));
+    background-size: 300% 100%;
+    animation: gradientShift 8s ease infinite;
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.5); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4); }
   }
 }
