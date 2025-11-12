@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -36,6 +36,7 @@ const NewComplaint = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -57,6 +58,32 @@ const NewComplaint = () => {
         return;
       }
       setSelectedFile(file);
+    }
+  };
+
+  const generateDescription = async () => {
+    if (!formData.title || !formData.category) {
+      toast.error("Please enter title and category first");
+      return;
+    }
+
+    setGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-description", {
+        body: { title: formData.title, category: formData.category }
+      });
+
+      if (error) throw error;
+
+      if (data?.description) {
+        setFormData({ ...formData, description: data.description });
+        toast.success("Description generated successfully!");
+      }
+    } catch (error: any) {
+      console.error("Error generating description:", error);
+      toast.error(error.message || "Failed to generate description");
+    } finally {
+      setGenerating(false);
     }
   };
 
@@ -204,7 +231,29 @@ const NewComplaint = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="description">Description</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={generateDescription}
+                    disabled={generating || !formData.title || !formData.category}
+                    className="neon-border hover:bg-primary/10"
+                  >
+                    {generating ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        AI Generate
+                      </>
+                    )}
+                  </Button>
+                </div>
                 <Textarea
                   id="description"
                   placeholder="Provide detailed information about your complaint"
@@ -215,6 +264,9 @@ const NewComplaint = () => {
                   rows={6}
                   required
                 />
+                <p className="text-xs text-muted-foreground">
+                  Fill in the title and category, then click "AI Generate" for an automatic description
+                </p>
               </div>
 
               <div className="flex items-center space-x-2">

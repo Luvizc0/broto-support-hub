@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Phone, Mail, Download, Image as ImageIcon } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
+import { ComplaintChat } from "@/components/ComplaintChat";
 import { toast } from "sonner";
 
 interface Complaint {
@@ -275,6 +276,11 @@ const AdminComplaintDetail = () => {
             </Button>
           </CardContent>
         </Card>
+
+        {/* Chat Section */}
+        <div className="mt-8">
+          <ComplaintChat complaintId={id!} />
+        </div>
       </main>
     </div>
   );

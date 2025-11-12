@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Phone, Download, Image as ImageIcon } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
+import { ComplaintChat } from "@/components/ComplaintChat";
 import { toast } from "sonner";
 
 interface Complaint {
@@ -171,6 +172,11 @@ const ComplaintDetail = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Chat Section */}
+        <div className="mt-8">
+          <ComplaintChat complaintId={id!} />
+        </div>
       </main>
     </div>
   );
