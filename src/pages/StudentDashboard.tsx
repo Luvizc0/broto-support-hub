@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Plus, LogOut, FileText, Clock, CheckCircle, Sparkles } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { toast } from "sonner";
@@ -91,10 +92,13 @@ const StudentDashboard = () => {
             <Sparkles className="w-8 h-8 text-primary animate-pulse-glow" />
             <h1 className="text-3xl font-bold neon-text">Student Dashboard</h1>
           </div>
-          <Button variant="outline" onClick={signOut} className="neon-border hover:bg-destructive/20">
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Button variant="outline" onClick={signOut} className="neon-border hover:bg-destructive/20">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
 

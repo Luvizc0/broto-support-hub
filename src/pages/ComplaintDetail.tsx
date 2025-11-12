@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowLeft, Phone, Download, Image as ImageIcon } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ComplaintChat } from "@/components/ComplaintChat";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { toast } from "sonner";
 
 interface Complaint {
@@ -96,14 +97,17 @@ const ComplaintDetail = () => {
 
       <header className="border-b border-primary/20 glass-card relative z-10">
         <div className="container mx-auto px-4 py-6">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/student")}
-            className="mb-2 neon-border hover:bg-primary/10"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Button>
+          <div className="flex items-center justify-between mb-2">
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/student")}
+              className="neon-border hover:bg-primary/10"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+            <ThemeToggle />
+          </div>
           <h1 className="text-3xl font-bold neon-text">Complaint Details</h1>
         </div>
       </header>

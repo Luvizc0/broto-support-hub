@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { LogOut, FileText, Clock, CheckCircle, Search, Filter, Shield } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { toast } from "sonner";
@@ -135,10 +136,13 @@ const AdminDashboard = () => {
             <Shield className="w-8 h-8 text-primary animate-pulse-glow" />
             <h1 className="text-3xl font-bold neon-text">Admin Dashboard</h1>
           </div>
-          <Button variant="outline" onClick={signOut} className="neon-border hover:bg-destructive/20">
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Button variant="outline" onClick={signOut} className="neon-border hover:bg-destructive/20">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
 

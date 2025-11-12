@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Shield, FileText, CheckCircle, Users, Sparkles, Zap } from "lucide-react";
 
 const Index = () => {
@@ -46,10 +47,13 @@ const Index = () => {
               <p className="text-xs text-muted-foreground">BCMP</p>
             </div>
           </div>
-          <Button onClick={() => navigate("/auth")} className="gradient-primary hover-lift">
-            <Sparkles className="w-4 h-4 mr-2" />
-            Get Started
-          </Button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Button onClick={() => navigate("/auth")} className="gradient-primary hover-lift">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Get Started
+            </Button>
+          </div>
         </div>
       </header>
 

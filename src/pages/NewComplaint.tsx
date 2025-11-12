@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { ArrowLeft, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -173,14 +174,17 @@ const NewComplaint = () => {
 
       <header className="border-b border-primary/20 glass-card relative z-10">
         <div className="container mx-auto px-4 py-6">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/student")}
-            className="mb-2 neon-border hover:bg-primary/10"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Button>
+          <div className="flex items-center justify-between mb-2">
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/student")}
+              className="neon-border hover:bg-primary/10"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+            <ThemeToggle />
+          </div>
           <h1 className="text-3xl font-bold neon-text">Submit New Complaint</h1>
         </div>
       </header>
