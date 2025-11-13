@@ -66,7 +66,7 @@ const AdminDashboard = () => {
         .from("complaints")
         .select(`
           *,
-          profiles!inner (
+          profiles!complaints_student_id_fkey (
             name,
             email
           )
