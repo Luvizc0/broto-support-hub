@@ -121,19 +121,36 @@ All colors MUST be HSL. */
 
 @layer components {
   .neon-border {
-    @apply border border-primary/30 shadow-[0_0_15px_rgba(0,255,255,0.3)];
+    @apply border border-primary/30;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
+  }
+  
+  .light .neon-border {
+    box-shadow: 0 0 8px hsl(var(--primary) / 0.15);
   }
   
   .neon-glow {
-    @apply shadow-[0_0_20px_rgba(0,255,255,0.5)];
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  }
+  
+  .light .neon-glow {
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.2);
   }
   
   .neon-text {
     text-shadow: 0 0 10px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--primary) / 0.5);
   }
   
+  .light .neon-text {
+    text-shadow: 0 0 6px hsl(var(--primary) / 0.4), 0 0 12px hsl(var(--primary) / 0.2);
+  }
+  
   .glass-card {
     @apply bg-card/50 backdrop-blur-xl border border-primary/20;
+  }
+  
+  .light .glass-card {
+    @apply bg-card/80 backdrop-blur-sm border border-primary/10;
   }
   
   .gradient-primary {
@@ -141,7 +158,16 @@ All colors MUST be HSL. */
   }
   
   .hover-lift {
-    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(0,255,255,0.4)];
+    transition: all 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
+  }
+  
+  .light .hover-lift:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
   }
   
   .animated-gradient {
@@ -168,8 +194,17 @@ All colors MUST be HSL. */
     animation: pulseGlow 2s ease-in-out infinite;
   }
   
+  .light .pulse-glow {
+    animation: pulseGlowLight 2s ease-in-out infinite;
+  }
+  
   @keyframes pulseGlow {
     0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.5); }
     50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4); }
+  }
+  
+  @keyframes pulseGlowLight {
+    0%, 100% { box-shadow: 0 0 10px hsl(var(--primary) / 0.2); }
+    50% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary) / 0.15); }
   }
 }
