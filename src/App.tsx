@@ -12,6 +12,7 @@ import NewComplaint from "./pages/NewComplaint";
 import ComplaintDetail from "./pages/ComplaintDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminComplaintDetail from "./pages/AdminComplaintDetail";
+import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/student/new-complaint" element={<NewComplaint />} />
               <Route path="/student/complaint/:id" element={<ComplaintDetail />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/users" element={<UserManagement />} />
               <Route path="/admin/complaint/:id" element={<AdminComplaintDetail />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

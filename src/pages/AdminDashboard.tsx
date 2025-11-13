@@ -7,9 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { LogOut, FileText, Clock, CheckCircle, Search, Filter, Shield } from "lucide-react";
+import { LogOut, FileText, Clock, CheckCircle, Search, Filter, Shield, Users } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
-import { AdminManagement } from "@/components/AdminManagement";
 import { toast } from "sonner";
 
 interface Complaint {
@@ -148,8 +147,27 @@ const AdminDashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 space-y-8 relative z-10">
-        {/* Admin Management */}
-        <AdminManagement />
+        {/* User Management Button */}
+        <Card className="glass-card">
+          <CardContent className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Users className="w-6 h-6 text-primary" />
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">User Management</h3>
+                  <p className="text-sm text-muted-foreground">Manage user roles and permissions</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => navigate("/admin/users")}
+                className="neon-border"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Manage Users
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
