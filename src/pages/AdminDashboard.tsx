@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LogOut, FileText, Clock, CheckCircle, Search, Filter, Shield } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
+import { AdminManagement } from "@/components/AdminManagement";
 import { toast } from "sonner";
 
 interface Complaint {
@@ -147,6 +148,9 @@ const AdminDashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 space-y-8 relative z-10">
+        {/* Admin Management */}
+        <AdminManagement />
+
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="glass-card hover-lift">
