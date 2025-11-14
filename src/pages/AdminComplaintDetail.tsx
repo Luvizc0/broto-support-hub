@@ -25,11 +25,12 @@ interface Complaint {
   attachment_url: string | null;
   created_at: string;
   updated_at: string;
+  is_anonymous: boolean;
   profiles: {
     name: string;
     email: string;
     phone: string;
-  };
+  } | null;
 }
 
 const AdminComplaintDetail = () => {
@@ -56,7 +57,7 @@ const AdminComplaintDetail = () => {
         .from("complaints")
         .select(`
           *,
-          profiles!inner (
+          profiles!complaints_student_id_fkey (
             name,
             email,
             phone
@@ -165,19 +166,28 @@ const AdminComplaintDetail = () => {
             <CardTitle className="text-primary">Student Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-primary">Name:</span>
-              <span>{complaint.profiles.name}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-primary" />
-              <span>{complaint.profiles.email}</span>
-            </div>
-            {complaint.profiles.phone && (
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-primary" />
-                <span>{complaint.profiles.phone}</span>
+            {complaint.is_anonymous ? (
+              <div className="text-center py-4">
+                <p className="text-muted-foreground">Anonymous Complaint</p>
+                <p className="text-sm text-muted-foreground mt-2">Student identity is hidden</p>
               </div>
+            ) : (
+              <>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-primary">Name:</span>
+                  <span>{complaint.profiles?.name}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-primary" />
+                  <span>{complaint.profiles?.email}</span>
+                </div>
+                {complaint.profiles?.phone && (
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-primary" />
+                    <span>{complaint.profiles.phone}</span>
+                  </div>
+                )}
+              </>
             )}
           </CardContent>
         </Card>
