@@ -90,19 +90,26 @@ const Auth = () => {
       if (error) throw error;
 
       // Check user role and redirect accordingly
-      const { data: roleData } = await supabase
+      const { data: roleData, error: roleError } = await supabase
         .from("user_roles")
         .select("role")
         .eq("user_id", data.user.id)
-        .single();
+        .maybeSingle();
+
+      if (roleError) {
+        console.error("Error fetching role:", roleError);
+      }
 
       toast.success("Signed in successfully!");
       
-      if (roleData?.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/student");
-      }
+      // Wait a bit to ensure role is properly set in context
+      setTimeout(() => {
+        if (roleData?.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/student");
+        }
+      }, 100);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);

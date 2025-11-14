@@ -18,10 +18,11 @@ interface Complaint {
   description: string;
   status: "pending" | "in_progress" | "resolved";
   created_at: string;
+  is_anonymous: boolean;
   profiles: {
     name: string;
     email: string;
-  };
+  } | null;
 }
 
 const AdminDashboard = () => {
@@ -297,7 +298,7 @@ const AdminDashboard = () => {
                     <div className="space-y-1">
                       <CardTitle className="text-primary">{complaint.title}</CardTitle>
                       <CardDescription>
-                        By: {complaint.profiles.name} ({complaint.profiles.email})
+                        By: {complaint.is_anonymous ? "Anonymous" : `${complaint.profiles?.name} (${complaint.profiles?.email})`}
                         <br />
                         Category: {complaint.category.replace("_", " ")}
                       </CardDescription>

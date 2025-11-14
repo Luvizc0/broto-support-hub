@@ -45,6 +45,7 @@ const NewComplaint = () => {
     description: "",
     requestedCall: false,
     studentPhone: "",
+    isAnonymous: false,
   });
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,13 +141,14 @@ const NewComplaint = () => {
       }
 
       const { error } = await supabase.from("complaints").insert({
-        student_id: user?.id as string,
+        student_id: formData.isAnonymous ? null : (user?.id as string),
         title: validated.title,
         category: validated.category as any,
         description: validated.description,
         requested_call: formData.requestedCall,
         student_phone: formData.requestedCall ? validated.studentPhone : null,
         attachment_url: attachmentUrl,
+        is_anonymous: formData.isAnonymous,
       });
 
       if (error) throw error;
@@ -273,17 +275,56 @@ const NewComplaint = () => {
                 </p>
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="requestCall"
-                  checked={formData.requestedCall}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, requestedCall: checked as boolean })
-                  }
-                />
-                <Label htmlFor="requestCall" className="cursor-pointer">
-                  Request a callback
-                </Label>
+              <div className="space-y-4 p-4 border border-border rounded-lg bg-accent/5">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="isAnonymous"
+                    checked={formData.isAnonymous}
+                    onCheckedChange={(checked) =>
+                      setFormData({
+                        ...formData,
+                        isAnonymous: checked as boolean,
+                        requestedCall: checked ? false : formData.requestedCall,
+                      })
+                    }
+                  />
+                  <Label htmlFor="isAnonymous" className="cursor-pointer">
+                    Submit as anonymous complaint
+                  </Label>
+                </div>
+
+                {!formData.isAnonymous && (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="requestCall"
+                        checked={formData.requestedCall}
+                        onCheckedChange={(checked) =>
+                          setFormData({ ...formData, requestedCall: checked as boolean })
+                        }
+                      />
+                      <Label htmlFor="requestCall" className="cursor-pointer">
+                        Request a callback
+                      </Label>
+                    </div>
+
+                    {formData.requestedCall && (
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          value={formData.studentPhone}
+                          onChange={(e) =>
+                            setFormData({ ...formData, studentPhone: e.target.value })
+                          }
+                          required
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
 
               {formData.requestedCall && (

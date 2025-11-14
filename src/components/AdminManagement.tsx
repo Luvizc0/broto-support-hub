@@ -4,7 +4,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { UserCog, Shield, User } from "lucide-react";
+import { UserCog, Shield, User, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface UserWithRole {
   id: string;
@@ -16,6 +26,8 @@ interface UserWithRole {
 export const AdminManagement = () => {
   const [users, setUsers] = useState<UserWithRole[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<UserWithRole | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -77,6 +89,27 @@ export const AdminManagement = () => {
     }
   };
 
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
+
+    try {
+      // Delete from profiles (will cascade to user_roles and complaints due to foreign keys)
+      const { error } = await supabase
+        .from("profiles")
+        .delete()
+        .eq("id", userToDelete.id);
+
+      if (error) throw error;
+
+      toast.success("User deleted successfully");
+      setDeleteDialogOpen(false);
+      setUserToDelete(null);
+      fetchUsers();
+    } catch (error: any) {
+      toast.error("Failed to delete user: " + error.message);
+    }
+  };
+
   if (loading) {
     return (
       <Card className="glass-card">
@@ -88,50 +121,84 @@ export const AdminManagement = () => {
   }
 
   return (
-    <Card className="glass-card">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <UserCog className="w-5 h-5 text-primary" />
-          <CardTitle className="text-primary">User Management</CardTitle>
-        </div>
-        <CardDescription>Manage user roles and permissions</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {users.map((user) => (
-          <div
-            key={user.id}
-            className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-accent/5 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              {user.role === "admin" ? (
-                <Shield className="w-5 h-5 text-primary" />
-              ) : (
-                <User className="w-5 h-5 text-muted-foreground" />
-              )}
-              <div>
-                <p className="font-medium text-foreground">{user.name}</p>
-                <p className="text-sm text-muted-foreground">{user.email}</p>
+    <>
+      <Card className="glass-card">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <UserCog className="w-5 h-5 text-primary" />
+            <CardTitle className="text-primary">User Management</CardTitle>
+          </div>
+          <CardDescription>Manage user roles and permissions</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-accent/5 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                {user.role === "admin" ? (
+                  <Shield className="w-5 h-5 text-primary" />
+                ) : (
+                  <User className="w-5 h-5 text-muted-foreground" />
+                )}
+                <div>
+                  <p className="font-medium text-foreground">{user.name}</p>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Badge
+                  variant={user.role === "admin" ? "default" : "secondary"}
+                  className={user.role === "admin" ? "neon-border" : ""}
+                >
+                  {user.role}
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => toggleRole(user.id, user.role)}
+                  className="neon-border"
+                >
+                  {user.role === "admin" ? "Remove Admin" : "Make Admin"}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setUserToDelete(user);
+                    setDeleteDialogOpen(true);
+                  }}
+                  className="text-destructive hover:bg-destructive/20"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Badge
-                variant={user.role === "admin" ? "default" : "secondary"}
-                className={user.role === "admin" ? "neon-border" : ""}
-              >
-                {user.role}
-              </Badge>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => toggleRole(user.id, user.role)}
-                className="neon-border"
-              >
-                {user.role === "admin" ? "Remove Admin" : "Make Admin"}
-              </Button>
-            </div>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
+          ))}
+        </CardContent>
+      </Card>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete User</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete {userToDelete?.name}? This action cannot be undone.
+              All complaints and data associated with this user will be permanently deleted.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteUser}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
