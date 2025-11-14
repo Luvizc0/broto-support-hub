@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { toast } from "sonner";
 import { Shield } from "lucide-react";
 import { z } from "zod";
+import authIllustration from "@/assets/auth-illustration.png";
 
 const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -122,13 +123,28 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-glow" />
+      </div>
+
       {/* Theme Toggle in top right corner */}
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 z-20">
         <ThemeToggle />
       </div>
       
-      <div className="w-full max-w-md space-y-6">
+      {/* Auth Illustration - Hidden on mobile */}
+      <div className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 w-96 animate-fade-in">
+        <img 
+          src={authIllustration} 
+          alt="Secure Authentication" 
+          className="w-full h-auto drop-shadow-2xl animate-float"
+        />
+      </div>
+      
+      <div className="w-full max-w-md space-y-6 relative z-10 lg:ml-auto lg:mr-12">
         <div className="flex flex-col items-center space-y-2">
           <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
             <Shield className="w-6 h-6 text-primary-foreground" />
