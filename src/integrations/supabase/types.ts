@@ -53,10 +53,11 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          is_anonymous: boolean | null
           requested_call: boolean | null
           resolution_note: string | null
           status: Database["public"]["Enums"]["complaint_status"]
-          student_id: string
+          student_id: string | null
           student_phone: string | null
           title: string
           updated_at: string
@@ -67,10 +68,11 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          is_anonymous?: boolean | null
           requested_call?: boolean | null
           resolution_note?: string | null
           status?: Database["public"]["Enums"]["complaint_status"]
-          student_id: string
+          student_id?: string | null
           student_phone?: string | null
           title: string
           updated_at?: string
@@ -81,15 +83,24 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          is_anonymous?: boolean | null
           requested_call?: boolean | null
           resolution_note?: string | null
           status?: Database["public"]["Enums"]["complaint_status"]
-          student_id?: string
+          student_id?: string | null
           student_phone?: string | null
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "complaints_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
