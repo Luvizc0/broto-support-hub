@@ -10,7 +10,6 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { LogOut, FileText, Clock, CheckCircle, Search, Filter, Shield, Users } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { toast } from "sonner";
-import emptyStateImg from "@/assets/empty-state.png";
 
 interface Complaint {
   id: string;
@@ -281,22 +280,9 @@ const AdminDashboard = () => {
           {filteredComplaints.length === 0 ? (
             <Card className="glass-card">
               <CardContent className="py-12">
-                <div className="text-center space-y-4">
-                  <div className="flex justify-center">
-                    <img 
-                      src={emptyStateImg} 
-                      alt="No complaints found" 
-                      className="w-64 h-64 object-contain opacity-80"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-lg font-medium text-foreground">No complaints found</p>
-                    <p className="text-muted-foreground">
-                      {searchQuery || statusFilter !== "all" || categoryFilter !== "all" 
-                        ? "Try adjusting your filters to see more results."
-                        : "No complaints have been submitted yet."}
-                    </p>
-                  </div>
+                <div className="text-center text-muted-foreground">
+                  <FileText className="w-12 h-12 mx-auto mb-4 opacity-50 text-primary" />
+                  <p>No complaints found matching your filters.</p>
                 </div>
               </CardContent>
             </Card>

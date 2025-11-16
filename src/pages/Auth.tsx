@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { toast } from "sonner";
-import { Shield, Lock, Zap } from "lucide-react";
+import { Shield } from "lucide-react";
 import { z } from "zod";
 
 const signUpSchema = z.object({
@@ -122,60 +122,28 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background cyber-grid flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Animated background orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl pulse-glow" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-secondary/20 rounded-full blur-3xl pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl pulse-glow" style={{ animationDelay: '2s' }} />
-      </div>
-
-      {/* Theme Toggle */}
-      <div className="absolute top-6 right-6 z-20">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
+      {/* Theme Toggle in top right corner */}
+      <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
       
-      {/* Cyberpunk Decorative Elements */}
-      <div className="hidden lg:block absolute left-12 top-1/2 -translate-y-1/2 space-y-6 animate-fade-in">
-        <div className="glass-card p-8 rounded-2xl neon-border scanline hover-lift">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-holographic rounded-xl flex items-center justify-center neon-glow">
-              <Lock className="w-8 h-8 text-primary-foreground" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold holographic-text">Secure Access</h3>
-              <p className="text-sm text-muted-foreground">Quantum Encrypted</p>
-            </div>
+      <div className="w-full max-w-md space-y-6">
+        <div className="flex flex-col items-center space-y-2">
+          <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+            <Shield className="w-6 h-6 text-primary-foreground" />
           </div>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-primary" />
-              <span>Real-time Sync</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-secondary" />
-              <span>End-to-End Protection</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div className="w-full max-w-md space-y-6 relative z-10">
-        <div className="flex flex-col items-center space-y-4 animate-fade-in">
-          <div className="w-20 h-20 bg-gradient-holographic rounded-2xl flex items-center justify-center neon-glow pulse-glow">
-            <Shield className="w-10 h-10 text-primary-foreground" />
-          </div>
-          <h1 className="text-4xl font-bold holographic-text">Brototype BCMP</h1>
-          <p className="text-muted-foreground text-center text-lg">
-            Next-Gen Complaint Management Portal
+          <h1 className="text-3xl font-bold">Brototype BCMP</h1>
+          <p className="text-muted-foreground text-center">
+            Complaint Management Portal
           </p>
         </div>
 
-        <Card className="glass-card neon-border scanline animate-fade-in">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-2xl holographic-text">Access Portal</CardTitle>
-            <CardDescription className="text-base">
-              Sign in or create your secure account
+            <CardTitle>Welcome</CardTitle>
+            <CardDescription>
+              Sign in to your account or create a new one
             </CardDescription>
           </CardHeader>
           <CardContent>

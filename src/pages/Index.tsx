@@ -4,7 +4,6 @@ import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Shield, FileText, CheckCircle, Users, Sparkles, Zap } from "lucide-react";
-import heroIllustration from "@/assets/hero-illustration.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -59,39 +58,26 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 py-16 relative z-10">
-        <div className="max-w-6xl mx-auto space-y-12">
-          {/* Hero Section with Illustration */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 text-center md:text-left">
-              <div className="flex justify-center md:justify-start mb-6">
-                <Zap className="w-20 h-20 text-primary animate-pulse-glow" />
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold neon-text animate-fade-in">
-                Brototype Complaint Management Portal
-              </h1>
-              <p className="text-xl text-muted-foreground">
-                A transparent and efficient platform for students to raise issues and track their resolutions with cutting-edge technology
-              </p>
-              <div className="pt-4">
-                <Button 
-                  size="lg" 
-                  onClick={() => navigate("/auth")}
-                  className="gradient-primary hover-lift text-lg px-8 py-6"
-                >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Sign In or Create Account
-                </Button>
-              </div>
+        <div className="max-w-4xl mx-auto text-center space-y-12">
+          <div className="space-y-6">
+            <div className="flex justify-center mb-6">
+              <Zap className="w-20 h-20 text-primary animate-pulse-glow" />
             </div>
-            
-            {/* Hero Illustration */}
-            <div className="relative animate-fade-in hover-lift">
-              <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-3xl animate-pulse-glow" />
-              <img 
-                src={heroIllustration} 
-                alt="Complaint Management Dashboard" 
-                className="relative rounded-2xl shadow-2xl glass-card"
-              />
+            <h1 className="text-5xl md:text-6xl font-bold neon-text animate-fade-in">
+              Brototype Complaint Management Portal
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              A transparent and efficient platform for students to raise issues and track their resolutions with cutting-edge technology
+            </p>
+            <div className="pt-4">
+              <Button 
+                size="lg" 
+                onClick={() => navigate("/auth")}
+                className="gradient-primary hover-lift text-lg px-8 py-6"
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
+                Sign In or Create Account
+              </Button>
             </div>
           </div>
 

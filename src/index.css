@@ -7,63 +7,54 @@ All colors MUST be HSL. */
 
 @layer base {
   :root {
-    /* Cyberpunk Dark Background */
-    --background: 240 20% 5%;
-    --foreground: 200 100% 95%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 7%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 7%;
+    --popover-foreground: 0 0% 98%;
     
-    /* Glassmorphism Cards */
-    --card: 240 15% 8%;
-    --card-foreground: 200 100% 95%;
-    --popover: 240 15% 8%;
-    --popover-foreground: 200 100% 95%;
+    /* Neon cyan primary */
+    --primary: 180 100% 50%;
+    --primary-foreground: 240 10% 3.9%;
+    --primary-hover: 180 100% 60%;
+    --primary-glow: 180 100% 70%;
     
-    /* Neon Cyan Primary */
-    --primary: 190 100% 55%;
-    --primary-foreground: 240 20% 5%;
-    --primary-hover: 190 100% 65%;
-    --primary-glow: 190 100% 75%;
+    /* Neon purple secondary */
+    --secondary: 280 100% 60%;
+    --secondary-foreground: 0 0% 98%;
     
-    /* Neon Purple Secondary */
-    --secondary: 270 100% 65%;
-    --secondary-foreground: 240 20% 5%;
-    --secondary-glow: 270 100% 75%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 320 100% 50%;
+    --accent-foreground: 0 0% 98%;
     
-    /* Neon Pink Accent */
-    --accent: 320 100% 60%;
-    --accent-foreground: 240 20% 5%;
-    --accent-glow: 320 100% 70%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
     
-    --muted: 240 15% 12%;
-    --muted-foreground: 220 10% 60%;
+    --border: 240 10% 15%;
+    --input: 240 10% 15%;
+    --ring: 180 100% 50%;
     
-    --destructive: 0 90% 55%;
-    --destructive-foreground: 0 0% 100%;
+    /* Neon status colors */
+    --status-pending: 45 100% 50%;
+    --status-pending-foreground: 240 10% 3.9%;
+    --status-in-progress: 280 100% 60%;
+    --status-in-progress-foreground: 0 0% 98%;
+    --status-resolved: 150 100% 40%;
+    --status-resolved-foreground: 0 0% 98%;
     
-    /* Glowing Borders */
-    --border: 240 20% 15%;
-    --border-glow: 190 100% 55%;
-    --input: 240 15% 12%;
-    --ring: 190 100% 55%;
-    
-    /* Holographic Status Colors */
-    --status-pending: 45 100% 60%;
-    --status-pending-foreground: 240 20% 5%;
-    --status-in-progress: 270 100% 65%;
-    --status-in-progress-foreground: 240 20% 5%;
-    --status-resolved: 150 100% 50%;
-    --status-resolved-foreground: 240 20% 5%;
-    
-    /* Cyberpunk Sidebar */
-    --sidebar-background: 240 20% 6%;
-    --sidebar-foreground: 200 100% 90%;
-    --sidebar-primary: 190 100% 55%;
-    --sidebar-primary-foreground: 240 20% 5%;
-    --sidebar-accent: 240 15% 10%;
-    --sidebar-accent-foreground: 200 100% 95%;
-    --sidebar-border: 240 20% 15%;
-    --sidebar-ring: 190 100% 55%;
+    /* Sidebar */
+    --sidebar-background: 240 10% 5%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 240 10% 3.9%;
+    --sidebar-accent: 240 10% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 10% 15%;
+    --sidebar-ring: 180 100% 50%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
   }
 
   .light {
@@ -129,98 +120,60 @@ All colors MUST be HSL. */
 }
 
 @layer components {
-  /* Cyberpunk Neon Borders */
   .neon-border {
-    @apply border border-primary/40;
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), inset 0 0 20px hsl(var(--primary) / 0.05);
+    @apply border border-primary/30;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
   }
   
-  .neon-border-secondary {
-    @apply border border-secondary/40;
-    box-shadow: 0 0 20px hsl(var(--secondary) / 0.3), inset 0 0 20px hsl(var(--secondary) / 0.05);
+  .light .neon-border {
+    box-shadow: 0 0 8px hsl(var(--primary) / 0.15);
   }
   
-  .neon-border-accent {
-    @apply border border-accent/40;
-    box-shadow: 0 0 20px hsl(var(--accent) / 0.3), inset 0 0 20px hsl(var(--accent) / 0.05);
-  }
-  
-  /* Holographic Glass Cards */
-  .glass-card {
-    @apply bg-card/40 backdrop-blur-2xl border border-primary/20;
-    box-shadow: 
-      0 8px 32px 0 rgba(0, 0, 0, 0.4),
-      inset 0 0 40px rgba(0, 255, 255, 0.05),
-      0 0 60px rgba(0, 255, 255, 0.1);
-  }
-  
-  .glass-card-secondary {
-    @apply bg-card/40 backdrop-blur-2xl border border-secondary/20;
-    box-shadow: 
-      0 8px 32px 0 rgba(0, 0, 0, 0.4),
-      inset 0 0 40px rgba(150, 100, 255, 0.05),
-      0 0 60px rgba(150, 100, 255, 0.1);
-  }
-  
-  /* Cyberpunk Neon Glow */
   .neon-glow {
-    box-shadow: 
-      0 0 30px hsl(var(--primary) / 0.5),
-      0 0 60px hsl(var(--primary) / 0.3),
-      inset 0 0 20px hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
   }
   
-  .neon-glow-secondary {
-    box-shadow: 
-      0 0 30px hsl(var(--secondary) / 0.5),
-      0 0 60px hsl(var(--secondary) / 0.3),
-      inset 0 0 20px hsl(var(--secondary) / 0.1);
+  .light .neon-glow {
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.2);
   }
   
-  /* Holographic Text Effects */
   .neon-text {
-    text-shadow: 
-      0 0 10px hsl(var(--primary) / 1),
-      0 0 20px hsl(var(--primary) / 0.8),
-      0 0 30px hsl(var(--primary) / 0.6),
-      0 0 40px hsl(var(--primary) / 0.4);
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.8), 0 0 20px hsl(var(--primary) / 0.5);
   }
   
-  .holographic-text {
-    background: linear-gradient(
-      90deg,
-      hsl(var(--primary)),
-      hsl(var(--secondary)),
-      hsl(var(--accent)),
-      hsl(var(--primary))
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: holographicShift 3s linear infinite;
+  .light .neon-text {
+    text-shadow: 0 0 6px hsl(var(--primary) / 0.4), 0 0 12px hsl(var(--primary) / 0.2);
   }
   
-  @keyframes holographicShift {
-    0%, 100% { background-position: 0% center; }
-    50% { background-position: 200% center; }
+  .glass-card {
+    @apply bg-card/50 backdrop-blur-xl border border-primary/20;
   }
   
-  /* Cyberpunk Gradients */
+  .light .glass-card {
+    @apply bg-card/80 backdrop-blur-sm border border-primary/10;
+  }
+  
   .gradient-primary {
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
   }
   
-  .gradient-holographic {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--primary)),
-      hsl(var(--secondary)),
-      hsl(var(--accent)),
-      hsl(var(--primary))
-    );
-    background-size: 300% 300%;
-    animation: gradientShift 6s ease infinite;
+  .hover-lift {
+    transition: all 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
+  }
+  
+  .light .hover-lift:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
+  }
+  
+  .animated-gradient {
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)), hsl(var(--primary)));
+    background-size: 300% 100%;
+    animation: gradientShift 8s ease infinite;
   }
   
   @keyframes gradientShift {
@@ -228,108 +181,30 @@ All colors MUST be HSL. */
     50% { background-position: 100% 50%; }
   }
   
-  /* Hover Effects */
-  .hover-lift {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
   }
   
-  .hover-lift:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 
-      0 20px 60px hsl(var(--primary) / 0.4),
-      0 0 40px hsl(var(--primary) / 0.3),
-      inset 0 0 30px hsl(var(--primary) / 0.1);
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
   }
   
-  .hover-glow {
-    transition: all 0.3s ease;
-  }
-  
-  .hover-glow:hover {
-    box-shadow: 
-      0 0 40px hsl(var(--primary) / 0.6),
-      0 0 80px hsl(var(--primary) / 0.4),
-      inset 0 0 30px hsl(var(--primary) / 0.2);
-  }
-  
-  /* Pulse Animations */
   .pulse-glow {
-    animation: pulseGlow 3s ease-in-out infinite;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  
+  .light .pulse-glow {
+    animation: pulseGlowLight 2s ease-in-out infinite;
   }
   
   @keyframes pulseGlow {
-    0%, 100% { 
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.4),
-                  0 0 40px hsl(var(--primary) / 0.2);
-    }
-    50% { 
-      box-shadow: 0 0 40px hsl(var(--primary) / 0.8),
-                  0 0 80px hsl(var(--primary) / 0.4),
-                  0 0 120px hsl(var(--primary) / 0.2);
-    }
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.5); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4); }
   }
   
-  .pulse-border {
-    animation: pulseBorder 2s ease-in-out infinite;
-  }
-  
-  @keyframes pulseBorder {
-    0%, 100% { 
-      border-color: hsl(var(--primary) / 0.3);
-      box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
-    }
-    50% { 
-      border-color: hsl(var(--primary) / 0.6);
-      box-shadow: 0 0 30px hsl(var(--primary) / 0.5);
-    }
-  }
-  
-  /* Scanline Effect */
-  .scanline {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .scanline::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 255, 255, 0.05) 50%,
-      transparent 100%
-    );
-    animation: scanlineMove 4s linear infinite;
-    pointer-events: none;
-  }
-  
-  @keyframes scanlineMove {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
-  }
-  
-  /* Futuristic Grid Background */
-  .cyber-grid {
-    background-image: 
-      linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    position: relative;
-  }
-  
-  .cyber-grid::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      circle at 50% 50%,
-      transparent 0%,
-      hsl(var(--background)) 100%
-    );
-    pointer-events: none;
+  @keyframes pulseGlowLight {
+    0%, 100% { box-shadow: 0 0 10px hsl(var(--primary) / 0.2); }
+    50% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 30px hsl(var(--primary) / 0.15); }
   }
 }
