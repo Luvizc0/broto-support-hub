@@ -99,18 +99,18 @@ const Index = () => {
           <div className="container mx-auto px-4 py-16 relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <motion.h1 
-                className="text-5xl md:text-7xl font-bold leading-tight"
+                className="text-5xl md:text-7xl font-bold leading-tight drop-shadow-2xl"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <span className="text-glow text-primary">Brototype</span>
+                <span className="text-glow text-primary drop-shadow-[0_0_30px_hsl(var(--primary)/0.8)]">Brototype</span>
                 <br />
-                <span className="text-foreground">Complaint Management</span>
+                <span className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">Complaint Management</span>
               </motion.h1>
               
               <motion.p 
-                className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+                className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
