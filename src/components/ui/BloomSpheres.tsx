@@ -12,7 +12,7 @@ const vertexShader = `
   varying vec2 vUv;
   void main() {
     vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * modelViewPosition * vec4(position, 1.0);
   }
 `;
 
@@ -36,6 +36,8 @@ export const BloomSpheres = () => {
   const frameIdRef = useRef<number>(0);
   const spheresRef = useRef<THREE.Mesh[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
+  const pointerRef = useRef<THREE.Vector2>(new THREE.Vector2());
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -83,7 +85,7 @@ export const BloomSpheres = () => {
     const bloomLayer = new THREE.Layers();
     bloomLayer.set(BLOOM_SCENE);
 
-    // Bloom parameters
+    // Bloom parameters (matching Three.js example)
     const params = {
       threshold: 0,
       strength: 1.5,
@@ -139,7 +141,7 @@ export const BloomSpheres = () => {
       scene.add(sphere);
       spheres.push(sphere);
 
-      // Enable bloom on most spheres
+      // Enable bloom on most spheres initially
       if (Math.random() < 0.7) {
         sphere.layers.enable(BLOOM_SCENE);
       }
@@ -241,15 +243,43 @@ export const BloomSpheres = () => {
         sphere.rotation.y += 0.003;
       });
 
-      // Subtle camera movement based on mouse
-      camera.position.x = mouseRef.current.x * 2;
-      camera.position.y = mouseRef.current.y * 2;
+      // Camera movement based on mouse/touch position
+      const targetX = mouseRef.current.x * 3;
+      const targetY = mouseRef.current.y * 3;
+      camera.position.x += (targetX - camera.position.x) * 0.05;
+      camera.position.y += (targetY - camera.position.y) * 0.05;
       camera.lookAt(0, 0, 0);
 
       render();
     };
 
     animate();
+
+    // Update pointer position for raycasting
+    const updatePointer = (clientX: number, clientY: number) => {
+      const rect = container.getBoundingClientRect();
+      pointerRef.current.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      pointerRef.current.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    };
+
+    // Handle click/tap to toggle bloom
+    const handleInteraction = (clientX: number, clientY: number) => {
+      updatePointer(clientX, clientY);
+      
+      raycasterRef.current.setFromCamera(pointerRef.current, camera);
+      const intersects = raycasterRef.current.intersectObjects(spheres, false);
+
+      if (intersects.length > 0) {
+        const object = intersects[0].object as THREE.Mesh;
+        
+        // Toggle bloom layer
+        if (bloomLayer.test(object.layers)) {
+          object.layers.disable(BLOOM_SCENE);
+        } else {
+          object.layers.enable(BLOOM_SCENE);
+        }
+      }
+    };
 
     // Mouse move handler
     const handleMouseMove = (event: MouseEvent) => {
@@ -258,7 +288,34 @@ export const BloomSpheres = () => {
       mouseRef.current.y = -((event.clientY - rect.top) / rect.height - 0.5) * 2;
     };
 
+    // Touch move handler
+    const handleTouchMove = (event: TouchEvent) => {
+      if (event.touches.length > 0) {
+        const touch = event.touches[0];
+        const rect = container.getBoundingClientRect();
+        mouseRef.current.x = ((touch.clientX - rect.left) / rect.width - 0.5) * 2;
+        mouseRef.current.y = -((touch.clientY - rect.top) / rect.height - 0.5) * 2;
+      }
+    };
+
+    // Click handler
+    const handleClick = (event: MouseEvent) => {
+      handleInteraction(event.clientX, event.clientY);
+    };
+
+    // Touch end handler (for tap)
+    const handleTouchEnd = (event: TouchEvent) => {
+      if (event.changedTouches.length > 0) {
+        const touch = event.changedTouches[0];
+        handleInteraction(touch.clientX, touch.clientY);
+      }
+    };
+
+    // Add event listeners
     window.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
+    container.addEventListener("click", handleClick);
+    container.addEventListener("touchend", handleTouchEnd);
 
     // Resize handler
     const handleResize = () => {
@@ -280,6 +337,9 @@ export const BloomSpheres = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("click", handleClick);
+      container.removeEventListener("touchend", handleTouchEnd);
       cancelAnimationFrame(frameIdRef.current);
       
       spheres.forEach((sphere) => {
@@ -304,8 +364,8 @@ export const BloomSpheres = () => {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ zIndex: 0 }}
+      className="absolute inset-0 w-full h-full cursor-pointer"
+      style={{ zIndex: 0, touchAction: "none" }}
     />
   );
 };
