@@ -85,11 +85,11 @@ export const BloomSpheres = () => {
     const bloomLayer = new THREE.Layers();
     bloomLayer.set(BLOOM_SCENE);
 
-    // Bloom parameters (reduced for subtlety)
+    // Bloom parameters (matching Three.js example)
     const params = {
       threshold: 0.2,
-      strength: 0.8,
-      radius: 0.5,
+      strength: 1.5,
+      radius: 0.75,
     };
 
     // Dark material for non-bloomed objects
