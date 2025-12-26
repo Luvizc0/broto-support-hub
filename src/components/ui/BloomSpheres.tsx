@@ -51,7 +51,7 @@ export const BloomSpheres = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.5;
+    renderer.toneMappingExposure = 0.8;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -85,11 +85,11 @@ export const BloomSpheres = () => {
     const bloomLayer = new THREE.Layers();
     bloomLayer.set(BLOOM_SCENE);
 
-    // Bloom parameters (matching Three.js example)
+    // Bloom parameters (reduced for subtlety)
     const params = {
-      threshold: 0,
-      strength: 1.5,
-      radius: 0.75,
+      threshold: 0.2,
+      strength: 0.8,
+      radius: 0.5,
     };
 
     // Dark material for non-bloomed objects
