@@ -104,7 +104,7 @@ const Index = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <span className="text-glow text-primary drop-shadow-[0_0_30px_hsl(var(--primary)/0.8)]">Brototype</span>
+                <span className="text-glow text-primary drop-shadow-[0_0_40px_hsl(var(--primary)/1)] [text-shadow:_0_0_20px_hsl(var(--primary)/0.9),_0_0_40px_hsl(var(--primary)/0.6),_0_4px_12px_rgba(0,0,0,0.9)]">Brototype</span>
                 <br />
                 <span className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">Complaint Management</span>
               </motion.h1>
